@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using CarRental.Api.Service;
+using System.Text.Json.Serialization;
 
 namespace CarRental.Api
 {
@@ -29,7 +30,9 @@ namespace CarRental.Api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            //services.AddControllers();
+            services.AddControllers()
+    .AddJsonOptions(opt => { opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
             services.AddSingleton<ICarRentalDataService, CarRentalDataService>(services =>
             {
                 var logger = services.GetRequiredService<ILogger<CarRentalDataService>>();
